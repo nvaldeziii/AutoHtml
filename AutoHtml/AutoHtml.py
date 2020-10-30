@@ -1,4 +1,4 @@
-import argparse
+import htmlmin
 import logging
 import os
 from pathlib import Path
@@ -12,9 +12,10 @@ class AutoHtml:
         self.document = "<!DOCTYPE html>\n"
 
     def generate(self):
-        return f"""{self.document}
+        html_doc = f"""{self.document}
 {self.html.generate()}
 """
+        return htmlmin.minify(html_doc, remove_empty_space=True)
 
     def write_to_file(self, filename):
         with open(filename, "w+") as fstream:
